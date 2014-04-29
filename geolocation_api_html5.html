@@ -1,17 +1,77 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
 <meta charset=utf-8>
-<meta name="viewport" content="width=620">
-
 <title>HTML5 Demo: geolocation</title>
-
 </head>
+
+<script src="js/jquery.js"></script>
+
+<script src="http://maps.google.com/maps/api/js?sensor=true"></script>
+
+<script>
+	
+	x = navigator.geolocation;
+
+	x.getCurrentPosition(success, failure);
+
+	function success(position) {
+
+		// Fetch the coordinates
+
+		var mylat = position.coords.latitude;
+		var mylong = position.coords.longitude;
+
+		// Google- API-ready latitude and longitude string
+
+		var coords = new google.maps.LatLng(myLat, myLong);
+
+		// Setting up our Google Map
+
+		var mapOptions = {
+			zoom: 16,
+			center: coords,
+			mapTypeId: google.maps.MapTypeId.ROADMAP
+		}
+
+		// Creating the map
+
+		var map = new google.maps.Map(document.getElementById("map"), mapOptions);
+
+		// Create a marker
+
+		var marker = new google.maps.Marker({map: map, position: coords})
+
+	}
+
+	function failure() {
+		$('#lat').html("<p>Falha! Não conseguimos rastrear sua posição.</p>"); 
+	}
+
+</script>
+
+<style>
+
+	#map{
+		width: 400px;
+		height:400px;
+	}
+
+</style>
 
 <body>
 
+<!-- Map placeholder -->
 
+<div class="map">
+
+</div>
+
+<!-- Longitude and latitude -->
+
+<div id="lat"></div>
+
+<div id="long"></div>
 
 </body>
 </html>
